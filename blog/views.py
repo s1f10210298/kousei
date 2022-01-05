@@ -26,6 +26,26 @@ def index(request):
     
     return render(request, 'blog/index.html', context)
 
+def index2(request):
+    if request.method == 'POST':
+        article = Article(title=request.POST['title'], body=request.POST['text'])
+        article.save()
+        return redirect(detail, article.id)
+    
+    if ('sort' in request.GET):
+        if request.GET['sort'] == 'like':
+            articles = Article.objects.order_by('-like')
+        else:
+            articles = Article.objects.order_by('-posted_at')
+    else:
+        articles = Article.objects.order_by('-posted_at')
+
+    context = {
+        "articles": articles
+    }
+    
+    return render(request, 'blog/index2.html', context)
+
 def hello(request):
     messages = ['Great Fortune!', 'Small Fortune', 'Bad Fortune..']
     fortune = random.randint(0, 2)
@@ -33,7 +53,7 @@ def hello(request):
     fortuneMessage = messages[fortune]
 
     data = {
-        'name' : 'Alice', 
+        'name' : 'Alice',
         'weather' : 'CLOUDY',
         'weather_detail' : ['Temperature: 23℃', 'Humidity: 40%', 'Wind: 5m/s'],
         'isGreatFortune' : isGreatFortune,

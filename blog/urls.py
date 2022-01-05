@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
 	path('', views.index, name='index'),
+	path('top', views.index2, name='index2'),
 	path('hello', views.hello, name='hello'),
 	path('redirect', views.redirect_test, name='redirect_test'),
 	path('<int:article_id>/', views.detail, name='detail'),
