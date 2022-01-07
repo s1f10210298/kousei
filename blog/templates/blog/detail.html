@@ -51,23 +51,24 @@
     </form>
 
     
-    <div style="margin-top: 70px;">
+    <div style="margin-top: 70px; margin-bottom: 200px;">
       <hr>
-    {% if comments %}
-    {% for comment in comments %}
-    <div class="card" style="margin-top: 20px;">
-      <div class="card-body">
+      {% if comments %}
+      {% for comment in comments %}
+      <div class="card" style="margin-top: 20px;">
+        <div class="card-body">
           <div class="card-text">
-              {{ article.body |linebreaksbr }}
+            {{ comment.text | linebreaksbr }}
           </div>
 
-    <div style="text-align: right;"><small>[{{ article.posted_at }}]</small></div>
-  </div></div>
-    {% endfor %}
-    {% else %}
-    <p>No Answer.</p>
-    {% endif %}
-    </div></div>
+          <div style="text-align: right;"><small>[{{ comment.posted_at }}]</small></div>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <p>No answer</p>
+      {% endif %}
+    </div>
 
     <hr>
 
