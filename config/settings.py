@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,7 +24,8 @@ SECRET_KEY = 'django-insecure-jjclco!sacgxmwe5iyd!%$*f612(!4q4+7df=^zl*eh18_l&r5
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+if 'DJANGO_DEBUG' in os.environ:
+    DEBUG = os.environ.get('DJANGO_DEBUG') == "True"
 ALLOWED_HOSTS = []
 
 
@@ -124,3 +125,7 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+if not DEBUG:
+    import django_heroku
+    django_heroku.settings(locals())
